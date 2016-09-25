@@ -28,6 +28,10 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
+        <repository>
+            <id>hsqldb</id>
+            <url>https://mvnrepository.com/artifact/org.hsqldb/hsqldb</url>
+        </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
@@ -62,6 +66,11 @@
             <artifactId>servlet-api</artifactId>
             <version>2.4</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>2.3.4</version>
         </dependency>
     </dependencies>
 
