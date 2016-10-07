@@ -28,10 +28,9 @@ import java.util.List;
  */
 public interface GenericDao<T extends Entity> {
 
-    T create() throws Exception;
-    T persist(T object) throws Exception;
-    void update(T object) throws Exception;
-    void delete(T object) throws Exception;
-    T getByPrimaryKey(Long key) throws Exception;
-    List<T> getAll() throws Exception;
+    T persist(T object) throws DaoException;
+    void update(T object) throws DaoException;
+    void delete(T object) throws DaoException;
+    T getByPrimaryKey(Long key) throws DaoException;
+    List<T> getAll() throws DaoException;
 }
