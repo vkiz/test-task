@@ -78,6 +78,7 @@ public class MainUI extends UI {
         Navigator navigator = new Navigator(this, viewDisplay);
         navigator.addView(MainView.NAME, new MainView());
         navigator.addView(GroupsView.NAME, new GroupsView());
+        navigator.addView(StudentsView.NAME, new StudentsView());
 
         mainViewButton.addClickListener(new Button.ClickListener() {
             @Override
@@ -90,6 +91,13 @@ public class MainUI extends UI {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 navigator.navigateTo(GroupsView.NAME);
+            }
+        });
+
+        studentsViewButton.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                navigator.navigateTo(StudentsView.NAME);
             }
         });
 
