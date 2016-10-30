@@ -16,21 +16,27 @@
 
 package com.haulmont.testtask.app;
 
+import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.ui.CustomLayout;
+
 /**
- * The class {@code AppTheme} contains constants of the style names from the apptheme.scss.
+ * The class {@code MainView} represents a main view in the application.
+ * The contents of the view is loaded from a template (html-page).
  *
  * @version 1.0
  * @author Vladimir
  */
-public class AppTheme {
+public class MainView extends CustomLayout implements View {
 
-    public static final String THEME_NAME = "apptheme";
+    public static final String NAME = "";
 
-    public static final String LAYOUT_BORDER = "layout-border";
-    public static final String MAIN_LAYOUT = "mainlayout";
+    public MainView() {
+        setTemplateName(AppTheme.MAIN_LAYOUT);
+        setSizeFull();
+    }
 
-    public static final String HEADER_LOGO = "img/header.png";
-
-    public AppTheme() {
+    @Override
+    public void enter(ViewChangeListener.ViewChangeEvent event) {
     }
 }

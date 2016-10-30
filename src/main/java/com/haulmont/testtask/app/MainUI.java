@@ -76,6 +76,14 @@ public class MainUI extends UI {
 
         ViewDisplay viewDisplay = new Navigator.ComponentContainerViewDisplay(viewsLayout);
         Navigator navigator = new Navigator(this, viewDisplay);
+        navigator.addView(MainView.NAME, new MainView());
+
+        mainViewButton.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                navigator.navigateTo(MainView.NAME);
+            }
+        });
 
         mainLayout.setStyleName(AppTheme.LAYOUT_BORDER);
         headerLayout.setStyleName(AppTheme.LAYOUT_BORDER);
