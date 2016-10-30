@@ -28,6 +28,8 @@ public class AppTheme {
 
     public static final String LAYOUT_BORDER = "layout-border";
 
+    public static final String HEADER_LOGO = "img/header.png";
+
     public AppTheme() {
     }
 }
