@@ -113,6 +113,27 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>8.1.16.v20140903</version>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.5.0</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <classpathScope>compile</classpathScope>
+                            <mainClass>com.vaadin.sass.SassCompiler</mainClass>
+                            <arguments>
+                                <argument>src/main/webapp/VAADIN/themes/apptheme/styles.scss</argument>
+                                <argument>src/main/webapp/VAADIN/themes/apptheme/styles.css</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>
