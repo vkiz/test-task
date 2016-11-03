@@ -48,31 +48,24 @@ public class MainUI extends UI {
         headerLayout.setMargin(false);
         headerLayout.setSpacing(true);
 
-        Button mainViewButton = new Button("Главная");
-        Button groupsViewButton = new Button("Группы");
-        Button studentsViewButton = new Button("Студенты");
+        Button mainButton = new Button("Главная");
+        Button groupsButton = new Button("Группы");
+        Button studentsButton = new Button("Студенты");
         Label header = new Label(title);
         header.setWidth(null);
         Embedded logo = new Embedded(null, new ThemeResource(AppTheme.HEADER_LOGO));
 
-        headerLayout.addComponent(mainViewButton);
-        headerLayout.addComponent(groupsViewButton);
-        headerLayout.addComponent(studentsViewButton);
-        headerLayout.addComponent(header);
+        headerLayout.addComponents(mainButton, groupsButton, studentsButton, header, logo);
         headerLayout.setComponentAlignment(header, Alignment.MIDDLE_RIGHT);
         headerLayout.setExpandRatio(header, 1f);
-        headerLayout.addComponent(logo);
 
         VerticalLayout viewsLayout = new VerticalLayout();
         viewsLayout.setSizeFull();
         viewsLayout.setMargin(false);
         viewsLayout.setSpacing(true);
 
-        mainLayout.addComponent(headerLayout);
-        mainLayout.addComponent(viewsLayout);
+        mainLayout.addComponents(headerLayout, viewsLayout);
         mainLayout.setExpandRatio(viewsLayout, 1f);
-
-        setContent(mainLayout);
 
         ViewDisplay viewDisplay = new Navigator.ComponentContainerViewDisplay(viewsLayout);
         Navigator navigator = new Navigator(this, viewDisplay);
@@ -80,29 +73,14 @@ public class MainUI extends UI {
         navigator.addView(GroupsView.NAME, new GroupsView());
         navigator.addView(StudentsView.NAME, new StudentsView());
 
-        mainViewButton.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                navigator.navigateTo(MainView.NAME);
-            }
-        });
-
-        groupsViewButton.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                navigator.navigateTo(GroupsView.NAME);
-            }
-        });
-
-        studentsViewButton.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                navigator.navigateTo(StudentsView.NAME);
-            }
-        });
+        mainButton.addClickListener(clickEvent -> navigator.navigateTo(MainView.NAME));
+        groupsButton.addClickListener(clickEvent -> navigator.navigateTo(GroupsView.NAME));
+        studentsButton.addClickListener(clickEvent -> navigator.navigateTo(StudentsView.NAME));
 
         mainLayout.setStyleName(AppTheme.LAYOUT_BORDER);
         headerLayout.setStyleName(AppTheme.LAYOUT_BORDER);
         viewsLayout.setStyleName(AppTheme.LAYOUT_BORDER);
+
+        setContent(mainLayout);
     }
 }
