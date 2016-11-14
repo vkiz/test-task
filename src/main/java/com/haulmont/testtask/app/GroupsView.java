@@ -22,6 +22,7 @@ import com.haulmont.testtask.hsqldb.DaoFactory;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.MouseEventDetails.MouseButton;
 import com.vaadin.ui.*;
 
@@ -69,9 +70,9 @@ class GroupsView extends VerticalLayout implements View {
             HorizontalLayout buttonsLayout = new HorizontalLayout();
             buttonsLayout.setSpacing(true);
 
-            addButton = new Button("Добавить");
-            editButton = new Button("Изменить");
-            deleteButton = new Button("Удалить");
+            addButton = new Button("Добавить", new ThemeResource(AppTheme.BUTTON_ADD));
+            editButton = new Button("Изменить", new ThemeResource(AppTheme.BUTTON_EDIT));
+            deleteButton = new Button("Удалить", new ThemeResource(AppTheme.BUTTON_DELETE));
             editButton.setEnabled(false);
             deleteButton.setEnabled(false);
             buttonsLayout.addComponents(addButton, editButton, deleteButton);

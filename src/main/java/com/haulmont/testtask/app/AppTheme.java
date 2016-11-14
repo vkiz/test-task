@@ -32,6 +32,9 @@ public class AppTheme {
 
     public static final String HEADER_LOGO = "img/header.png";
     public static final String GROUP_ICON = "img/group.png";
+    public static final String BUTTON_ADD = "img/button_add.png";
+    public static final String BUTTON_EDIT = "img/button_edit.png";
+    public static final String BUTTON_DELETE = "img/button_delete.png";
 
     public AppTheme() {
     }
