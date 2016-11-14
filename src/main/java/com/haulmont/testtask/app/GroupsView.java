@@ -16,9 +16,17 @@
 
 package com.haulmont.testtask.app;
 
+import com.haulmont.testtask.dao.DaoException;
+import com.haulmont.testtask.entity.Group;
+import com.haulmont.testtask.hsqldb.DaoFactory;
+
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.shared.MouseEventDetails.MouseButton;
+import com.vaadin.ui.*;
+
+import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * The class {@code GroupsView} represents a view,
@@ -27,11 +35,126 @@ import com.vaadin.ui.VerticalLayout;
  * @version 1.0
  * @author Vladimir
  */
-public class GroupsView extends VerticalLayout implements View {
+class GroupsView extends VerticalLayout implements View {
 
-    public static final String NAME = "groups";
+    static final String NAME = "groups";
 
-    public GroupsView() {
+    private Table table;
+    private Button addButton;
+    private Button editButton;
+    private Button deleteButton;
+
+    private static Logger logger = Logger.getLogger(GroupsView.class.getName());
+
+    GroupsView() {
+        createUI();
+        processEvents();
+        fillTable();
+    }
+
+    private void createUI() {
+        try {
+            table = new Table();
+            table.addContainerProperty("number", Integer.class, null,
+                    "Номер группы", null, Table.Align.LEFT);
+            table.addContainerProperty("faculty", String.class, null,
+                    "Название факультета", null, Table.Align.LEFT);
+            table.setColumnWidth("number", 200);
+            table.setColumnExpandRatio("faculty", 1f);
+            table.setSelectable(true);
+            table.setImmediate(true);
+            table.setNullSelectionAllowed(false);
+            table.setSizeFull();
+
+            HorizontalLayout buttonsLayout = new HorizontalLayout();
+            buttonsLayout.setSpacing(true);
+
+            addButton = new Button("Добавить");
+            editButton = new Button("Изменить");
+            deleteButton = new Button("Удалить");
+            editButton.setEnabled(false);
+            deleteButton.setEnabled(false);
+            buttonsLayout.addComponents(addButton, editButton, deleteButton);
+
+            setMargin(true);
+            setSpacing(true);
+            setSizeFull();
+            addComponents(table, buttonsLayout);
+            setExpandRatio(table, 1f);
+        } catch (Exception e) {
+            logger.severe(e.getMessage());
+        }
+    }
+
+    private void processEvents() {
+        try {
+            table.addValueChangeListener(valueChangeEvent -> {
+                if (table.getValue() != null) {
+                    editButton.setEnabled(true);
+                    deleteButton.setEnabled(true);
+                } else {
+                    editButton.setEnabled(false);
+                    deleteButton.setEnabled(false);
+                }
+            });
+
+            table.addItemClickListener(itemClickEvent -> {
+                if (itemClickEvent.isDoubleClick() &&
+                        itemClickEvent.getButton() == MouseButton.LEFT) {
+                    Object itemId = itemClickEvent.getItemId();
+                    if (itemId != null) {
+                        getUI().addWindow(new GroupWindow(table, itemId));
+                    }
+                }
+            });
+
+            addButton.addClickListener(clickEvent ->
+                    getUI().addWindow(new GroupWindow(table, null)));
+
+            editButton.addClickListener(clickEvent -> {
+                Object itemId = table.getValue();
+                if (itemId != null) {
+                    getUI().addWindow(new GroupWindow(table, itemId));
+                }
+            });
+
+            deleteButton.addClickListener(clickEvent -> {
+                Object itemId = table.getValue();
+                if (itemId != null) {
+                    Object selItemId = table.prevItemId(itemId);
+                    if (selItemId == null) {
+                        selItemId = table.nextItemId(itemId);
+                    }
+                    Group group = new Group();
+                    Long id = (Long) itemId;
+                    group.setId(id);
+                    try {
+                        DaoFactory.getInstance().getGroupDao().delete(group);
+                        table.removeItem(itemId);
+                        if (selItemId != null) {
+                            table.select(selItemId);
+                            table.setCurrentPageFirstItemId(selItemId);
+                        }
+                    } catch (DaoException e) {
+                        logger.severe(e.getMessage());
+                    }
+                }
+            });
+        } catch (Exception e) {
+            logger.severe(e.getMessage());
+        }
+    }
+
+    private void fillTable() {
+        try {
+            List<Group> groups = DaoFactory.getInstance().getGroupDao().getAll();
+            table.removeAllItems();
+            for (Group group : groups) {
+                table.addItem(new Object[] { group.getNumber(), group.getFaculty() }, group.getId());
+            }
+        } catch (Exception e) {
+            logger.severe(e.getMessage());
+        }
     }
 
     @Override
