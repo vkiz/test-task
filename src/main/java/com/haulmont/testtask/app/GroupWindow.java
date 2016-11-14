@@ -57,6 +57,7 @@ class GroupWindow extends Window {
 
     private void createUI() {
         setIcon(new ThemeResource(AppTheme.GROUP_ICON));
+        setStyleName(AppTheme.MODAL_WINDOW);
         setWidth("450px");
         setHeight("205px");
         setModal(true);
@@ -82,6 +83,7 @@ class GroupWindow extends Window {
         numberText.setConversionError("Введите значение от 1 до 999");
         numberText.addValidator(new IntegerRangeValidator("Введите значение от 1 до 999", 1, 999));
         numberText.setValidationVisible(false);
+        numberText.setMaxLength(3);
         numberText.setWidth("100%");
 
         facultyText = new TextField("Название факультета");

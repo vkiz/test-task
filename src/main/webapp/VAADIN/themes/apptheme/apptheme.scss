@@ -14,12 +14,52 @@
  * limitations under the License.
  */
 
-@import "../valo/valo";
+@import "../valo/valo.scss";
 
 @mixin apptheme {
   @include valo;
 
   .layout-border {
     border: solid 1px black;
+  }
+
+  .modal-window {
+    // window header
+    .v-window-outerheader {
+      background-color: lightblue;
+      margin-left: -10px;
+    }
+    // window caption text
+    .v-window-header {
+      color: #1a50ff;
+      font-weight: bold;
+    }
+    // window contents
+    .v-window-contents {
+      background-color: lightcyan;
+    }
+    // window close button
+    .v-window-closebox {
+      background-color: lightblue;
+    }
+    // textfield caption
+    .v-caption {
+      color: royalblue;
+      font-size: 105%;
+    }
+    // textfield
+    .v-textfield {
+      color: royalblue;
+      background-color: aliceblue;
+    }
+    // button background
+    .v-button {
+      @include valo-button-style($background-color: #ddf8ff);
+    }
+    // button caption
+    .v-button-caption {
+      color: royalblue;
+      font-size: 105%;
+    }
   }
 }

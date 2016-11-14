@@ -28,6 +28,7 @@ public class AppTheme {
 
     public static final String LAYOUT_BORDER = "layout-border";
     public static final String MAIN_LAYOUT = "mainlayout";
+    public static final String MODAL_WINDOW = "modal-window";
 
     public static final String HEADER_LOGO = "img/header.png";
     public static final String GROUP_ICON = "img/group.png";
