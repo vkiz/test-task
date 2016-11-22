@@ -45,7 +45,7 @@ public class GroupDao implements GenericDao<Group> {
     @Override
     public Group persist(Group object) throws DaoException {
         Group group = new Group();
-        String sql = "INSERT INTO T_Group (num, faculty) VALUES (?, ?);";
+        String sql = "insert into T_GROUP (NUM, FACULTY) values (?, ?);";
         try (PreparedStatement st = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             st.setInt(1, object.getNumber());
             st.setString(2, object.getFaculty());
@@ -70,7 +70,7 @@ public class GroupDao implements GenericDao<Group> {
 
     @Override
     public void update(Group object) throws DaoException {
-        String sql = "UPDATE T_Group SET num = ?, faculty = ? WHERE id = ?;";
+        String sql = "update T_GROUP set NUM = ?, FACULTY = ? where ID = ?;";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, object.getNumber());
             st.setString(2, object.getFaculty());
@@ -83,7 +83,7 @@ public class GroupDao implements GenericDao<Group> {
 
     @Override
     public void delete(Group object) throws DaoException {
-        String sql = "DELETE FROM T_Group WHERE id = ?";
+        String sql = "delete from T_GROUP where ID = ?;";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setLong(1, object.getId());
             st.executeUpdate();
@@ -95,14 +95,14 @@ public class GroupDao implements GenericDao<Group> {
     @Override
     public Group getByPrimaryKey(Long key) throws DaoException {
         Group group = new Group();
-        String sql = "SELECT num, faculty FROM T_Group WHERE id = ?;";
+        String sql = "select NUM, FACULTY from T_GROUP where ID = ?;";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setLong(1, key);
             ResultSet rs = st.executeQuery();
             rs.next();
             group.setId(key);
-            group.setNumber(rs.getInt("num"));
-            group.setFaculty(rs.getString("faculty"));
+            group.setNumber(rs.getInt("NUM"));
+            group.setFaculty(rs.getString("FACULTY"));
         } catch (SQLException e) {
             group = null;
             throw new DaoException(e);
@@ -113,14 +113,14 @@ public class GroupDao implements GenericDao<Group> {
     @Override
     public List<Group> getAll() throws DaoException {
         List<Group> list = new ArrayList<Group>();
-        String sql = "SELECT id, num, faculty FROM T_Group;";
+        String sql = "select ID, NUM, FACULTY from T_GROUP;";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Group group = new Group();
-                group.setId(rs.getLong("id"));
-                group.setNumber(rs.getInt("num"));
-                group.setFaculty(rs.getString("faculty"));
+                group.setId(rs.getLong("ID"));
+                group.setNumber(rs.getInt("NUM"));
+                group.setFaculty(rs.getString("FACULTY"));
                 list.add(group);
             }
         } catch (SQLException e) {

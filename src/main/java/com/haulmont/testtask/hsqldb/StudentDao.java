@@ -47,15 +47,22 @@ public class StudentDao implements GenericDao<Student> {
     @Override
     public Student persist(Student object) throws DaoException {
         Student student = new Student();
-        String sql = "INSERT INTO T_Student (firstname, lastname, middlename, birthdate, group_id) " +
-                     "VALUES (?, ?, ?, ?, ?);";
+        String sql = "insert into T_STUDENT (FIRST_NAME, LAST_NAME, MIDDLE_NAME, BIRTH_DATE, GROUP_ID) " +
+                     "values (?, ?, ?, ?, ?);";
         try (PreparedStatement st = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             st.setString(1, object.getFirstName());
             st.setString(2, object.getLastName());
             st.setString(3, object.getMiddleName());
-            Date sqlDate = new Date(object.getBirthDate().getTime());
+            Date sqlDate = null;
+            if (object.getBirthDate() != null) {
+                sqlDate = new Date(object.getBirthDate().getTime());
+            }
             st.setDate(4, sqlDate);
-            st.setLong(5, object.getGroup().getId());
+            Long groupId = null;
+            if (object.getGroup() != null) {
+                groupId = object.getGroup().getId();
+            }
+            st.setLong(5, groupId);
             if (st.executeUpdate() == 1) {
                 try (ResultSet rs = st.getGeneratedKeys()) {
                     rs.next();
@@ -80,15 +87,22 @@ public class StudentDao implements GenericDao<Student> {
 
     @Override
     public void update(Student object) throws DaoException {
-        String sql = "UPDATE T_Student SET firstname = ?, lastname = ?, middlename = ?, birthdate = ?, group_id = ? " +
-                     "WHERE id = ?;";
+        String sql = "update T_STUDENT set FIRST_NAME = ?, LAST_NAME = ?, MIDDLE_NAME = ?, BIRTH_DATE = ?, GROUP_ID = ? " +
+                     "where ID = ?;";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setString(1, object.getFirstName());
             st.setString(2, object.getLastName());
             st.setString(3, object.getMiddleName());
-            Date sqlDate = new Date(object.getBirthDate().getTime());
+            Date sqlDate = null;
+            if (object.getBirthDate() != null) {
+                sqlDate = new Date(object.getBirthDate().getTime());
+            }
             st.setDate(4, sqlDate);
-            st.setLong(5, object.getGroup().getId());
+            Long groupId = null;
+            if (object.getGroup() != null) {
+                groupId = object.getGroup().getId();
+            }
+            st.setLong(5, groupId);
             st.setLong(6, object.getId());
             st.executeUpdate();
         } catch (SQLException e) {
@@ -98,7 +112,7 @@ public class StudentDao implements GenericDao<Student> {
 
     @Override
     public void delete(Student object) throws DaoException {
-        String sql = "DELETE FROM T_Student WHERE id = ?";
+        String sql = "delete from T_STUDENT where ID = ?;";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setLong(1, object.getId());
             st.executeUpdate();
@@ -110,18 +124,18 @@ public class StudentDao implements GenericDao<Student> {
     @Override
     public Student getByPrimaryKey(Long key) throws DaoException {
         Student student = new Student();
-        String sql ="SELECT firstname, lastname, middlename, birthdate, group_id FROM T_Student WHERE id = ?;";
+        String sql ="select FIRST_NAME, LAST_NAME, MIDDLE_NAME, BIRTH_DATE, GROUP_ID from T_STUDENT where ID = ?;";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setLong(1, key);
             ResultSet rs = st.executeQuery();
             rs.next();
             student.setId(key);
-            student.setFirstName(rs.getString("firstname"));
-            student.setLastName(rs.getString("lastname"));
-            student.setMiddleName(rs.getString("middlename"));
-            student.setBirthDate(rs.getDate("birthdate"));
+            student.setFirstName(rs.getString("FIRST_NAME"));
+            student.setLastName(rs.getString("LAST_NAME"));
+            student.setMiddleName(rs.getString("MIDDLE_NAME"));
+            student.setBirthDate(rs.getDate("BIRTH_DATE"));
             GroupDao groupDao = DaoFactory.getInstance().getGroupDao();
-            Group group = groupDao.getByPrimaryKey(rs.getLong("group_id"));
+            Group group = groupDao.getByPrimaryKey(rs.getLong("GROUP_ID"));
             student.setGroup(group);
         } catch (SQLException e) {
             student = null;
@@ -133,18 +147,18 @@ public class StudentDao implements GenericDao<Student> {
     @Override
     public List<Student> getAll() throws DaoException {
         List<Student> list = new ArrayList<Student>();
-        String sql ="SELECT id, firstname, lastname, middlename, birthdate, group_id FROM T_Student;";
+        String sql ="select ID, FIRST_NAME, LAST_NAME, MIDDLE_NAME, BIRTH_DATE, GROUP_ID from T_STUDENT;";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Student student = new Student();
-                student.setId(rs.getLong("id"));
-                student.setFirstName(rs.getString("firstname"));
-                student.setLastName(rs.getString("lastname"));
-                student.setMiddleName(rs.getString("middlename"));
-                student.setBirthDate(rs.getDate("birthdate"));
+                student.setId(rs.getLong("ID"));
+                student.setFirstName(rs.getString("FIRST_NAME"));
+                student.setLastName(rs.getString("LAST_NAME"));
+                student.setMiddleName(rs.getString("MIDDLE_NAME"));
+                student.setBirthDate(rs.getDate("BIRTH_DATE"));
                 GroupDao groupDao = DaoFactory.getInstance().getGroupDao();
-                Group group = groupDao.getByPrimaryKey(rs.getLong("group_id"));
+                Group group = groupDao.getByPrimaryKey(rs.getLong("GROUP_ID"));
                 student.setGroup(group);
                 list.add(student);
             }
