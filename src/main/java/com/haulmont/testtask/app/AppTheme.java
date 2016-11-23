@@ -17,12 +17,13 @@
 package com.haulmont.testtask.app;
 
 /**
- * The class {@code AppTheme} contains constants of the style names from the apptheme.scss.
+ * The class {@code AppTheme} contains constants of the style names
+ * from the apptheme.scss and icon file names.
  *
  * @version 1.0
  * @author Vladimir
  */
-public class AppTheme {
+final class AppTheme {
 
     public static final String THEME_NAME = "apptheme";
 
@@ -32,10 +33,11 @@ public class AppTheme {
 
     public static final String HEADER_LOGO = "img/header.png";
     public static final String GROUP_ICON = "img/group.png";
+    public static final String STUDENT_ICON = "img/student.png";
     public static final String BUTTON_ADD = "img/button_add.png";
     public static final String BUTTON_EDIT = "img/button_edit.png";
     public static final String BUTTON_DELETE = "img/button_delete.png";
 
-    public AppTheme() {
+    private AppTheme() {
     }
 }
