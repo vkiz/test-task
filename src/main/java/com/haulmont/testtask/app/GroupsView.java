@@ -22,6 +22,7 @@ import com.haulmont.testtask.hsqldb.DaoFactory;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.MouseEventDetails.MouseButton;
 import com.vaadin.ui.*;
@@ -136,7 +137,15 @@ class GroupsView extends VerticalLayout implements View {
                             table.setCurrentPageFirstItemId(selItemId);
                         }
                     } catch (DaoException e) {
-                        logger.severe(e.getMessage());
+                        if (e.getCause().getClass().equals(java.sql.SQLIntegrityConstraintViolationException.class)) {
+                            Notification notification = new Notification("Удаление группы невозможно, " +
+                                    "так как она содержит студентов",
+                                    Notification.Type.HUMANIZED_MESSAGE);
+                            notification.setIcon(new ThemeResource(AppTheme.GROUP_LINK));
+                            notification.show(Page.getCurrent());
+                        } else {
+                            logger.severe(e.getMessage());
+                        }
                     }
                 }
             });
