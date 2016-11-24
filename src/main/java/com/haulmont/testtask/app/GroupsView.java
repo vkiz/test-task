@@ -50,7 +50,6 @@ class GroupsView extends VerticalLayout implements View {
     GroupsView() {
         createUI();
         processEvents();
-        fillTable();
     }
 
     private void createUI() {
@@ -151,8 +150,9 @@ class GroupsView extends VerticalLayout implements View {
             List<Group> groups = DaoFactory.getInstance().getGroupDao().getAll();
             table.removeAllItems();
             for (Group group : groups) {
-                table.addItem(new Object[] { group.getNumber(), group.getFaculty() }, group.getId());
+                table.addItem(new Object[] {group.getNumber(), group.getFaculty()}, group.getId());
             }
+            table.sort(new Object[] {"faculty", "number"}, new boolean[] {true, true});
         } catch (Exception e) {
             logger.severe(e.getMessage());
         }
@@ -160,5 +160,6 @@ class GroupsView extends VerticalLayout implements View {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
+        fillTable();
     }
 }

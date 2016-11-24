@@ -208,9 +208,10 @@ public class StudentsView extends VerticalLayout implements View {
             List<Student> students = DaoFactory.getInstance().getStudentDao().getAll();
             table.removeAllItems();
             for (Student student : students) {
-                table.addItem(new Object[] { student.getLastName(), student.getFirstName(), student.getMiddleName(),
-                        student.getBirthDate(), student.getGroup() }, student.getId());
+                table.addItem(new Object[] {student.getLastName(), student.getFirstName(), student.getMiddleName(),
+                        student.getBirthDate(), student.getGroup()}, student.getId());
             }
+            table.sort(new Object[] {"lastName"}, new boolean[] {true});
         } catch (Exception e) {
             logger.severe(e.getMessage());
         }
