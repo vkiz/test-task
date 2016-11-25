@@ -94,15 +94,17 @@ public class GroupDao implements GenericDao<Group> {
 
     @Override
     public Group getByPrimaryKey(Long key) throws DaoException {
-        Group group = new Group();
+        Group group = null;
         String sql = "select NUM, FACULTY from T_GROUP where ID = ?;";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setLong(1, key);
             ResultSet rs = st.executeQuery();
-            rs.next();
-            group.setId(key);
-            group.setNumber(rs.getInt("NUM"));
-            group.setFaculty(rs.getString("FACULTY"));
+            if (rs.next()) {
+                group = new Group();
+                group.setId(key);
+                group.setNumber(rs.getInt("NUM"));
+                group.setFaculty(rs.getString("FACULTY"));
+            }
         } catch (SQLException e) {
             group = null;
             throw new DaoException(e);

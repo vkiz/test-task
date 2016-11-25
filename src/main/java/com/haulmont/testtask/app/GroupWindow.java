@@ -47,8 +47,10 @@ class GroupWindow extends Window {
 
     private static Logger logger = Logger.getLogger(GroupWindow.class.getName());
 
+    private static final String REQUIRED = "Обязательное для заполнения поле";
+    private static final String RANGE = "Введите значение от 1 до 999";
+
     GroupWindow(Table table, Object itemId) {
-        super();
         this.table = table;
         this.itemId = itemId;
         createUI();
@@ -78,10 +80,10 @@ class GroupWindow extends Window {
         numberText.setImmediate(true);
         numberText.setNullRepresentation("");
         numberText.setRequired(true);
-        numberText.setRequiredError("Обязательное для заполнения поле");
+        numberText.setRequiredError(REQUIRED);
         numberText.setConverter(Integer.class);
-        numberText.setConversionError("Введите значение от 1 до 999");
-        numberText.addValidator(new IntegerRangeValidator("Введите значение от 1 до 999", 1, 999));
+        numberText.setConversionError(RANGE);
+        numberText.addValidator(new IntegerRangeValidator(RANGE, 1, 999));
         numberText.setValidationVisible(false);
         numberText.setMaxLength(3);
         numberText.setWidth("100%");
@@ -90,8 +92,8 @@ class GroupWindow extends Window {
         facultyText.setImmediate(true);
         facultyText.setNullRepresentation("");
         facultyText.setRequired(true);
-        facultyText.setRequiredError("Обязательное для заполнения поле");
-        facultyText.addValidator(new NullValidator("Обязательное для заполнения поле", false));
+        facultyText.setRequiredError(REQUIRED);
+        facultyText.addValidator(new NullValidator(REQUIRED, false));
         facultyText.setValidationVisible(false);
         facultyText.setMaxLength(32);
         facultyText.setWidth("100%");
@@ -178,7 +180,6 @@ class GroupWindow extends Window {
 
     private boolean isValidFields() {
         boolean res = true;
-
         try {
             Integer intVal = (Integer) numberText.getConvertedValue();
             ObjectProperty<Integer> intProp = new ObjectProperty<>(intVal);
@@ -197,7 +198,6 @@ class GroupWindow extends Window {
         }
         numberText.setValidationVisible(!numberText.isValid());
         facultyText.setValidationVisible(!facultyText.isValid());
-
         return res;
     }
 }

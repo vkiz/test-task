@@ -27,11 +27,11 @@ import com.vaadin.ui.CustomLayout;
  * @version 1.0
  * @author Vladimir
  */
-public class MainView extends CustomLayout implements View {
+class MainView extends CustomLayout implements View {
 
-    public static final String NAME = "";
+    static final String NAME = "";
 
-    public MainView() {
+    MainView() {
         setTemplateName(AppTheme.MAIN_LAYOUT);
         setSizeFull();
     }

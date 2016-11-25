@@ -54,9 +54,12 @@ public class MainUI extends UI {
         Label header = new Label(title);
         header.setWidth(null);
         Embedded logo = new Embedded(null, new ThemeResource(AppTheme.HEADER_LOGO));
+        logo.setHeight("32px");
+        logo.setWidth("32px");
 
         headerLayout.addComponents(mainButton, groupsButton, studentsButton, header, logo);
         headerLayout.setComponentAlignment(header, Alignment.MIDDLE_RIGHT);
+        headerLayout.setComponentAlignment(logo, Alignment.MIDDLE_CENTER);
         headerLayout.setExpandRatio(header, 1f);
 
         VerticalLayout viewsLayout = new VerticalLayout();

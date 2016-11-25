@@ -290,6 +290,7 @@ class StudentWindow extends Window {
             ObjectProperty<String> strProp = new ObjectProperty<>(strVal);
             middleNameText.setPropertyDataSource(strProp);
         } catch (Exception e) {
+            res = false;
         }
         try {
             birthDateField.validate();

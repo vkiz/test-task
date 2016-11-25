@@ -123,20 +123,22 @@ public class StudentDao implements GenericDao<Student> {
 
     @Override
     public Student getByPrimaryKey(Long key) throws DaoException {
-        Student student = new Student();
+        Student student = null;
         String sql ="select FIRST_NAME, LAST_NAME, MIDDLE_NAME, BIRTH_DATE, GROUP_ID from T_STUDENT where ID = ?;";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setLong(1, key);
             ResultSet rs = st.executeQuery();
-            rs.next();
-            student.setId(key);
-            student.setFirstName(rs.getString("FIRST_NAME"));
-            student.setLastName(rs.getString("LAST_NAME"));
-            student.setMiddleName(rs.getString("MIDDLE_NAME"));
-            student.setBirthDate(rs.getDate("BIRTH_DATE"));
-            GroupDao groupDao = DaoFactory.getInstance().getGroupDao();
-            Group group = groupDao.getByPrimaryKey(rs.getLong("GROUP_ID"));
-            student.setGroup(group);
+            if (rs.next()) {
+                student = new Student();
+                student.setId(key);
+                student.setFirstName(rs.getString("FIRST_NAME"));
+                student.setLastName(rs.getString("LAST_NAME"));
+                student.setMiddleName(rs.getString("MIDDLE_NAME"));
+                student.setBirthDate(rs.getDate("BIRTH_DATE"));
+                GroupDao groupDao = DaoFactory.getInstance().getGroupDao();
+                Group group = groupDao.getByPrimaryKey(rs.getLong("GROUP_ID"));
+                student.setGroup(group);
+            }
         } catch (SQLException e) {
             student = null;
             throw new DaoException(e);

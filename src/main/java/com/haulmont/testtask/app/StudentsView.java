@@ -45,9 +45,9 @@ import java.util.logging.Logger;
  * @version 1.0
  * @author Vladimir
  */
-public class StudentsView extends VerticalLayout implements View {
+class StudentsView extends VerticalLayout implements View {
 
-    public static final String NAME = "students";
+    static final String NAME = "students";
 
     private Table table;
     private Button addButton;
@@ -59,7 +59,7 @@ public class StudentsView extends VerticalLayout implements View {
 
     private static Logger logger = Logger.getLogger(StudentsView.class.getName());
 
-    public StudentsView() {
+    StudentsView() {
         createUI();
         processEvents();
     }
