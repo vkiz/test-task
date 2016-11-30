@@ -32,7 +32,8 @@ class MainView extends CustomLayout implements View {
     static final String NAME = "";
 
     MainView() {
-        setTemplateName(AppTheme.MAIN_LAYOUT);
+        setTemplateName(AppTheme.TEMPLATE);
+        setStyleName(AppTheme.MAIN_LAYOUT);
         setSizeFull();
     }
 

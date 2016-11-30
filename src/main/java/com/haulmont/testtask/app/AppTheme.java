@@ -25,19 +25,22 @@ package com.haulmont.testtask.app;
  */
 final class AppTheme {
 
-    public static final String THEME_NAME = "apptheme";
+    static final String THEME_NAME = "apptheme";
 
-    public static final String LAYOUT_BORDER = "layout-border";
-    public static final String MAIN_LAYOUT = "mainlayout";
-    public static final String MODAL_WINDOW = "modal-window";
+    static final String HEADER_LAYOUT = "header-layout";
+    static final String MAIN_LAYOUT = "main-layout";
+    static final String VIEW_LAYOUT = "view-layout";
+    static final String MODAL_WINDOW = "modal-window";
+    static final String BORDERLESS = "borderless";
 
-    public static final String HEADER_LOGO = "img/header.png";
-    public static final String GROUP_ICON = "img/group.png";
-    public static final String GROUP_LINK = "img/group_link.png";
-    public static final String STUDENT_ICON = "img/student.png";
-    public static final String BUTTON_ADD = "img/button_add.png";
-    public static final String BUTTON_EDIT = "img/button_edit.png";
-    public static final String BUTTON_DELETE = "img/button_delete.png";
+    static final String TEMPLATE = "mainlayout";
+    static final String HEADER_LOGO = "img/header.png";
+    static final String GROUP_ICON = "img/group.png";
+    static final String GROUP_LINK = "img/group_link.png";
+    static final String STUDENT_ICON = "img/student.png";
+    static final String BUTTON_ADD = "img/button_add.png";
+    static final String BUTTON_EDIT = "img/button_edit.png";
+    static final String BUTTON_DELETE = "img/button_delete.png";
 
     private AppTheme() {
     }

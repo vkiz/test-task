@@ -40,19 +40,30 @@ public class MainUI extends UI {
 
         VerticalLayout mainLayout = new VerticalLayout();
         mainLayout.setSizeFull();
-        mainLayout.setMargin(true);
-        mainLayout.setSpacing(true);
+        mainLayout.setMargin(false);
+        mainLayout.setSpacing(false);
 
         HorizontalLayout headerLayout = new HorizontalLayout();
+        headerLayout.setHeight("48px");
         headerLayout.setWidth("100%");
         headerLayout.setMargin(false);
         headerLayout.setSpacing(true);
 
         Button mainButton = new Button("Главная");
+        mainButton.setHeight("100%");
+        mainButton.addStyleName(AppTheme.BORDERLESS);
+
         Button groupsButton = new Button("Группы");
+        groupsButton.setHeight("100%");
+        groupsButton.addStyleName(AppTheme.BORDERLESS);
+
         Button studentsButton = new Button("Студенты");
+        studentsButton.setHeight("100%");
+        studentsButton.addStyleName(AppTheme.BORDERLESS);
+
         Label header = new Label(title);
         header.setWidth(null);
+
         Embedded logo = new Embedded(null, new ThemeResource(AppTheme.HEADER_LOGO));
         logo.setHeight("32px");
         logo.setWidth("32px");
@@ -80,9 +91,9 @@ public class MainUI extends UI {
         groupsButton.addClickListener(clickEvent -> navigator.navigateTo(GroupsView.NAME));
         studentsButton.addClickListener(clickEvent -> navigator.navigateTo(StudentsView.NAME));
 
-        mainLayout.setStyleName(AppTheme.LAYOUT_BORDER);
-        headerLayout.setStyleName(AppTheme.LAYOUT_BORDER);
-        viewsLayout.setStyleName(AppTheme.LAYOUT_BORDER);
+        headerLayout.setStyleName(AppTheme.HEADER_LAYOUT);
+        mainLayout.setStyleName(AppTheme.VIEW_LAYOUT);
+        viewsLayout.setStyleName(AppTheme.VIEW_LAYOUT);
 
         setContent(mainLayout);
     }

@@ -142,6 +142,7 @@ class GroupsView extends VerticalLayout implements View {
                                     "так как она содержит студентов",
                                     Notification.Type.HUMANIZED_MESSAGE);
                             notification.setIcon(new ThemeResource(AppTheme.GROUP_LINK));
+                            notification.setStyleName(AppTheme.THEME_NAME);
                             notification.show(Page.getCurrent());
                         } else {
                             logger.severe(e.getMessage());
