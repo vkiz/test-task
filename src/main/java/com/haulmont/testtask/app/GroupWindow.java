@@ -24,9 +24,11 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.validator.IntegerRangeValidator;
 import com.vaadin.data.validator.NullValidator;
+import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.*;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -198,6 +200,48 @@ class GroupWindow extends Window {
         }
         numberText.setValidationVisible(!numberText.isValid());
         facultyText.setValidationVisible(!facultyText.isValid());
+
+        try {
+            Integer newNum = (Integer) numberText.getConvertedValue();
+            List<Group> groups = DaoFactory.getInstance().getGroupDao().getAll();
+            if (itemId == null) {
+                for (Group group : groups) {
+                    if (newNum.intValue() == group.getNumber()) {
+                        showNotification(newNum);
+                        res = false;
+                        break;
+                    }
+                }
+            } else {
+                Integer num = null;
+                if (table != null) {
+                    Item item = table.getItem(itemId);
+                    if (item != null) {
+                        num = (Integer) item.getItemProperty("number").getValue();
+                    }
+                }
+                if (newNum.intValue() != num.intValue()) {
+                    for (Group group : groups) {
+                        if (newNum.intValue() == group.getNumber()) {
+                            showNotification(newNum);
+                            res = false;
+                            break;
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            res = false;
+        }
+
         return res;
+    }
+
+    private void showNotification(Integer number) {
+        Notification notification = new Notification("Группа с номером " + number.toString() + " уже существует",
+                Notification.Type.HUMANIZED_MESSAGE);
+        notification.setIcon(new ThemeResource(AppTheme.GROUP_ICON));
+        notification.setStyleName(AppTheme.THEME_NAME);
+        notification.show(Page.getCurrent());
     }
 }
